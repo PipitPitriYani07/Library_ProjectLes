@@ -10,6 +10,7 @@ use App\Http\Controllers\PeminjamController;
 use App\Http\Controllers\PenerbitController;
 use App\Http\Controllers\DashboardController;
 use App\Http\Controllers\PengelolaController;
+use App\Http\Controllers\PinjamBukuController;
 
 /*
 |--------------------------------------------------------------------------
@@ -81,6 +82,8 @@ Route::middleware('auth')->group(function(){
     Route::get('/hapuspengelola/{id}',[UserController::class, 'hapus']);
 
     Route::get('logout', [AuthController::class, 'logout']);
+
+    Route::get('/pinjambuku', [PinjamBukuController:: class, 'index']);
 
 });
 

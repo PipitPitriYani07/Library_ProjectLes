@@ -12,7 +12,7 @@ class Transaksi extends Model
     use HasFactory;
 
     protected $fillable = [
-      'users_id',
+      'user_id',
       'tgl_pinjam',
       'tgl_kembali'
 
@@ -24,7 +24,7 @@ class Transaksi extends Model
         return $this->hasMany(DetailTransaksi:: class, 'transaksi_id', 'id');
     }
     public function user(){
-        return $this->belongsTo(User::class, 'users_id', 'id');
+        return $this->belongsTo(User::class, 'user_id', 'id');
     }
 
 }

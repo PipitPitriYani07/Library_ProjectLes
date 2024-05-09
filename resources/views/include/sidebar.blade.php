@@ -31,12 +31,17 @@
             <li class="nav-item">
                 <a class="nav-link" href="indexkategori">
                     <i class="fas fa-fw fa-bookmark"></i>
-                    <span>Kategori</span></a>
+                    <span>Kategori Buku</span></a>
             </li>
             <li class="nav-item">
                 <a class="nav-link" href="indexbuku">
                     <i class="fas fa-fw fa-book"></i>
                     <span>Buku</span></a>
+            </li>
+            <li class="nav-item">
+                <a class="nav-link" href="pinjambuku">
+                    <i class="fas fa-fw fa-paperclip"></i>
+                    <span>Pinjam Buku</span></a>
             </li>
             @if (auth()->user()->role == "Pengelola")
             <li class="nav-item">
