@@ -10,12 +10,12 @@
     <div class="card shadow mb-4">
         <div class="card-header py-3">
             <h6 class="m-0 font-weight-bold text-primary">
-                DataTables Buku
+                DataTables Pinjam Buku
             </h6>
             <br>
-            @if (auth()->user()->role == "Pengelola")
-            <a href="/tambahbuku" class="btn btn-primary pull-right">Tambah Buku</a>
-            @endif
+
+            <a href="/tambahpeminjaman" class="btn btn-primary pull-right">Pinjam Buku</a>
+
         </div>
         <div class="card-body">
             <div class="table-responsive">
@@ -47,7 +47,7 @@
                         <td>{{ $item->user->name }}</td>
                         <td>{{ $item->tgl_pinjam }}</td>
                         <td>{{ $item->tgl_kembali }}</td>
-                        <td>{{ $item->tgl_kembali}}</td>
+                        <td>{{ $item->jumlah_pinjam}}</td>
                         <td>
                             <a href="/buku/edit/{{ $item->id }}">Edit</a>
                             <a href="/hapusbuku/{{ $item->id }}">Hapus</a>
