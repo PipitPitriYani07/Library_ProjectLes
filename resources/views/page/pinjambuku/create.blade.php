@@ -12,6 +12,7 @@
             <h6 class="m-0 font-weight-bold text-primary">
                 Form Pinjam Buku
             </h6>
+            <hr>
             <a href="/pinjambuku" class="btn btn-warning pull-right"><span class="fa fa-undo"></span> Kembali</a>
     </div>
         <div class="card-body">
@@ -27,33 +28,33 @@
                 </form>
                 <div class="row mt-2">
                     <div class="col-md-6">
-                        <button class="btn btn-primary" onClick="buatPinjam()" >Buat Peminjaman</button>
+                        <button class="btn btn-primary" onclick="buatPinjam()" >Buat Peminjaman</button>
                     </div>
                 </div>
                 <hr>
                 <div class="row">
                     <div class="col-md-4">
-                        <input type="text" name="" id="" class="form form-control">
+                        <input type="text" name="idbuku" id="idbuku" class="form form-control">
                     </div>
                     <div class="col-md-2">
-                        <button class="btn btn-success">Cari Buku</button>
+                        <button class="btn btn-success" onclick="cariBuku()" >Cari Buku</button>
                     </div>
                 </div>
                 <div class="row">
                     <div class="col-md-3">
                         <label for="">Nama Buku</label>
-                        <input type="text" name="" id="" class="form form-control">
+                        <input type="text" name="namabuku" id="namabuku" class="form form-control">
                     </div>
                     <div class="col-md-3">
                         <label for="">Kategori</label>
-                        <input type="text" name="" id="" class="form form-control">
+                        <input type="text" name="kategoribuku" id="kategoribuku" class="form form-control">
                     </div>
                     <div class="col-md-3">
                         <label for="">Jumlah Pinjam</label>
-                        <input type="text" name="" id="" class="form form-control">
+                        <input type="text" name="jumlahpinjam" id="jumlahpinjam" class="form form-control">
                     </div>
                     <div class="col-md-3"><br>
-                        <button class="btn btn-primary" >Pilih</button>
+                        <button class="btn btn-primary" onclick="pilihBuku()" >Pilih</button>
                     </div>
                 </div>
                 <div class="row mt-4">
@@ -81,7 +82,8 @@
 @push('jsfooter')
 //untuk menyisipkan file JS
 <script>
-  function buatPinjam(){
+    var idTransaksi;
+    function buatPinjam(){
         $.ajax({
             url: window.location.origin+'/simpantransaksi',
             type: "POST",
@@ -89,12 +91,62 @@
             data: $('#form-buatpinjam').serialize(),
             success: function(res){
                 //fungsi fungsi ketika berhasil
-                console.log(res)
+                console.log(res.idtransaksi)
+                idTransaksi=res.idtransaksi
             },
             error: function(res){
                 // fungsi ketika error
             }
         })
     }
+
+    //cari buku
+    function cariBuku(){
+        $.ajax({
+            url: window.location.origin+'/caribuku/'+$('#idbuku').val(),
+            type: "GET",
+            dataType: "JSON",
+            success: function(res){
+                console.log(res)
+                $('#namabuku').val(res.data.judul_buku)
+                $('#kategoribuku').val(res.data.kategori.nama_kategori)
+            },
+            error: function(res){
+                alert("Data buku tidak di temukan")
+
+            }
+        })
+    }
+
+    function pilihBuku(){
+        var namaBuku = $('#namabuku').val();
+        var jumlahPinjam = $('#jumlahpinjam').val();
+        var kategoriBuku = $('#kategoribuku').val();
+
+        if(namaBuku && jumlahPinjam){
+            // Dapatkan jumlah baris saat ini dalam tabel
+            var rowCount = $('#databuku tr').length + 1;
+
+            // Tambahkan baris baru ke tabel
+            var newRow = `
+                <tr>
+                    <td>${rowCount}</td>
+                    <td>${namaBuku}</td>
+                    <td>${jumlahPinjam}</td>
+                    <td><button class="btn btn-danger" onclick="hapusBuku(this)">Hapus</button></td>
+                </tr>
+            `;
+            $('#databuku').append(newRow);
+
+            // Kosongkan input setelah menambahkan ke tabel
+            $('#idbuku').val('');
+            $('#namabuku').val('');
+            $('#jumlahpinjam').val('');
+            $('#kategoribuku').val('');
+        } else {
+            alert('Nama Buku dan Jumlah Pinjam harus diisi');
+        }
+    }
+
 </script>
 @endpush
